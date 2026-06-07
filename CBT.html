@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT | ICPaser</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+        /* Biru Khas CBT di Screenshot */
+        .bg-cbt-blue { background-color: #3b82f6; }
+        .text-cbt-blue { color: #3b82f6; }
+        
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        /* Custom radio button style */
+        .option-container input[type="radio"]:checked + div {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <div id="main-header" class="bg-cbt-blue text-white px-4 py-3 hidden shadow-sm">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-white p-1 rounded text-blue-600 font-bold text-xs">CBT</div>
+                <div>
+                    <h1 class="text-xs font-bold leading-tight">MAN Insan Cendekia Paser</h1>
+                    <p class="text-[10px] opacity-80">CBT-Application</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="text-right">
+                    <h2 id="header-user-name" class="text-xs font-bold uppercase">ALISHA TRI SEPTIARA</h2>
+                    <p id="header-user-nisn" class="text-[10px] opacity-70">3098622092</p>
+                </div>
+                <button onclick="logout()" class="ml-2 p-1.5 hover:bg-blue-700 rounded transition">
+                    <i class="fa-solid fa-right-from-bracket text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <main class="flex-grow flex items-center justify-center w-full p-4">
+
+        <div id="page-login" class="page active w-full max-w-md">
+            <div class="fixed top-0 left-0 right-0 h-[220px] bg-cbt-blue -z-10 shadow-md">
+                <div class="p-4 flex items-center gap-3 text-white max-w-7xl mx-auto">
+                    <div class="bg-white p-1 rounded text-blue-600 font-bold text-xs">CBT</div>
+                    <div>
+                        <h1 class="text-xs font-bold leading-tight">MAN Insan Cendekia Paser</h1>
+                        <p class="text-[10px] opacity-80">CBT-Application</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden mt-12">
+                <div class="border-b px-6 py-3 bg-gray-50/50">
+                    <h2 class="text-sm font-semibold text-gray-700">Login</h2>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div>
+                        <label class="text-[11px] text-gray-500 font-medium block mb-1">Nama Peserta</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <i class="fa-regular fa-user text-xs"></i>
+                            </span>
+                            <input type="text" id="login-nama" placeholder="Masukkan nama kamu..." class="w-full pl-9 pr-4 py-2 bg-[#e8f0fe] border border-gray-200 rounded text-xs focus:outline-none focus:border-blue-400">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-gray-500 font-medium block mb-1">Password</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <i class="fa-solid fa-lock text-xs"></i>
+                            </span>
+                            <input type="password" value="123456" disabled class="w-full pl-9 pr-10 py-2 bg-[#e8f0fe] border border-gray-200 rounded text-xs text-gray-400 select-none">
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
+                                <i class="fa-regular fa-eye-slash text-xs"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <button onclick="handleLogin()" class="w-full bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium py-2 rounded shadow-sm transition">
+                        Login
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="page-dashboard" class="page w-full max-w-4xl mt-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+                
+                <div class="md:col-span-1 bg-white p-4 rounded-lg shadow-sm border border-gray-200/60 text-center text-xs font-medium text-gray-700">
+                    Jangan lupa berdoa, Semoga sukses !
+                </div>
+
+                <div class="md:col-span-2 bg-white rounded-lg shadow-sm border border-gray-200/60 overflow-hidden">
+                    <div class="flex border-b text-xs font-semibold text-gray-500">
+                        <button id="tab-btn-ujian" onclick="switchTab('ujian')" class="px-4 py-3 text-blue-600 border-b-2 border-blue-500 bg-gray-50/50">Ujian</button>
+                        <button id="tab-btn-hasil" onclick="switchTab('hasil')" class="px-4 py-3 hover:text-gray-700">Hasil</button>
+                    </div>
+
+                    <div id="tab-content-ujian" class="p-4 space-y-4">
+                        <div class="text-xs space-y-1">
+                            <p class="text-gray-400">Nama Peserta</p>
+                            <p id="dash-user-name" class="font-bold text-gray-800 uppercase">ALISHA TRI SEPTIARA</p>
+                            <p class="text-gray-400 pt-2">Nomor Ujian</p>
+                            <p class="font-bold text-gray-800">3098622092</p>
+                        </div>
+                        
+                        <div id="box-ujian-tersedia" class="border border-blue-100 bg-blue-50/30 rounded-lg p-4 mt-4 flex justify-between items-center">
+                            <div>
+                                <h4 class="text-xs font-bold text-gray-800">Final Review 16</h4>
+                                <p class="text-[11px] text-gray-400 mt-0.5">Ujian Akhir Kelulusan Masa Remaja Usia 16</p>
+                            </div>
+                            <button onclick="startExam()" class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-4 py-1.5 rounded font-medium shadow-sm transition">
+                                Kerjakan
+                            </button>
+                        </div>
+                        <div id="box-ujian-kosong" class="hidden border border-amber-200 bg-amber-50 text-amber-700 text-xs p-3 rounded text-center font-medium">
+                            Tidak ada mata ujian untuk anda saat ini
+                        </div>
+                    </div>
+
+                    <div id="tab-content-hasil" class="p-4 hidden space-y-4">
+                        <div id="hasil-belum-ada" class="text-center py-6 text-xs text-gray-400">
+                            Belum ada riwayat ujian yang diselesaikan.
+                        </div>
+                        
+                        <div id="hasil-sudah-ada" class="hidden space-y-6">
+                            <div class="flex flex-col items-center justify-center bg-green-50 border border-green-100 p-4 rounded-lg">
+                                <span class="text-[10px] font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded uppercase tracking-wider">Nilai Akhir</span>
+                                <h1 class="text-5xl font-black text-green-600 my-2">100</h1>
+                                <p class="text-xs text-gray-500">Status: Lulus Sempurna (Usia 17 Tahun 🎉)</p>
+                            </div>
+                            
+                            <div class="border-t pt-4">
+                                <h4 class="text-xs font-bold text-gray-800 mb-2 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-envelope-open-text text-blue-500"></i> Surat Pesan Khusus Untukmu:
+                                </h4>
+                                <p class="text-xs text-gray-600 leading-relaxed text-justify bg-gray-50 p-4 rounded border border-gray-100 italic">
+                                    "On your special day, I just want to wish you all the good things life can give. I hope this year brings you closer to the things you've been quietly wishing for, even the ones you never say out loud.<br><br>
+                                    There's something I've honestly wanted to tell you. Even if I don't always show it, even if I seem distant or not very expressive, I do care. Probably more than it looks. I notice you. I pay attention to the small things. And somehow, in my quiet moments, when nothing's really happening, my thoughts still find their way to you.<br><br>
+                                    Without you even realizing it, you've become one of my safe places. Someone I think about when my mind feels heavy, when I need an escape, or when I just want a bit of comfort. And because of that, I truly hope that someday, if you ever need it, I can be that safe place for you too. Somewhere you can run to, rest for a while, and just be yourself."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div id="page-exam" class="page w-full max-w-7xl mt-4">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 border-b px-4 py-2.5 flex justify-between items-center text-xs text-gray-600 font-medium">
+                    <div class="flex items-center gap-2">
+                        <span id="display-number-top" class="bg-gray-800 text-white font-bold h-6 w-8 flex items-center justify-center rounded">1</span>
+                        <span class="font-bold text-gray-700">Pilihan Ganda Kompleks</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="bg-blue-500 text-white font-mono px-3 py-1 rounded text-xs font-bold tracking-wider">
+                            00 : 16 : 00
+                        </div>
+                        <div class="flex gap-1 text-gray-400 text-sm">
+                            <button class="p-1 hover:text-gray-600"><i class="fa-solid fa-table-cells"></i></button>
+                            <button class="p-1 hover:text-gray-600"><i class="fa-solid fa-expand"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 space-y-6 min-h-[300px]">
+                    <div class="text-xs text-gray-800 leading-relaxed">
+                        <span class="font-bold block mb-2 text-gray-400">Pertanyaan:</span>
+                        <p id="question-text" class="font-medium text-sm text-gray-900"></p>
+                    </div>
+
+                    <div class="space-y-2.5 max-w-3xl" id="options-container">
+                        </div>
+                </div>
+
+                <div class="bg-gray-50 border-t p-3 flex justify-between items-center text-xs font-medium">
+                    <button id="btn-prev" onclick="prevQuestion()" class="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-chevron-left"></i> Sebelumnya
+                    </button>
+                    <label class="flex items-center gap-2 text-gray-600 cursor-pointer">
+                        <input type="checkbox" class="h-4 w-4 accent-amber-500 rounded"> Ragu-ragu
+                    </label>
+                    <button id="btn-next" onclick="nextQuestion()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1.5 transition">
+                        Selanjutnya <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+    <div id="modal-alert" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full text-center shadow-2xl border border-gray-100">
+            <div class="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-orange-50 mb-4">
+                <i class="fa-solid fa-circle-exclamation text-3xl text-orange-500"></i>
+            </div>
+            <h3 class="text-base font-bold text-gray-900">Yakin ingin mengakhiri usia 16?</h3>
+            <p class="text-xs text-gray-500 mt-2.5 leading-relaxed bg-gray-50 p-3 rounded border border-dashed">
+                Periksa kembali seluruh kenangan yang telah kamu jalani.<br>
+                <span class="font-semibold text-gray-700">Pastikan tidak ada momen berharga yang terlewat.</span>
+            </p>
+            
+            <div class="grid grid-cols-2 gap-3 mt-6 text-xs font-semibold">
+                <button onclick="closeModal()" class="px-4 py-2.5 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 transition">
+                    Batal
+                </button>
+                <button onclick="finishExam()" class="px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded shadow-sm transition">
+                    Selesai
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-3 text-[10px] text-gray-400 border-t bg-white w-full">
+        © 2019 - 2026 Extraordinary CBT v3.17.8 - ristretto
+    </footer>
+
+
+    <script>
+        // Array Soal Sesuai Request Lengkap Opsi A - D
+        const daftarSoal = [
+            {
+                text: "Bagaimana perjalananmu di usia 16 sejauh ini?",
+                options: [
+                    "A. Penuh cerita baru",
+                    "B. Banyak pelajaran yang didapat",
+                    "C. Ada tawa, ada tantangan",
+                    "D. Semua benar"
+                ]
+            },
+            {
+                text: "Jika usia 16 adalah sebuah cerita, bagaimana kamu menggambarkannya?",
+                options: [
+                    "A. Petualangan yang seru, karena bareng shasa",
+                    "B. Perjalanan yang penuh pelajaran, karena bareng lisaa",
+                    "C. Bab yang tak akan verlupakan, karena bareng alisha",
+                    "D. Semua jawaban benar"
+                ]
+            },
+            {
+                text: "Hal apa yang paling berharga dari usia 16?",
+                options: [
+                    "A. Kenangan yang tercipta bareng shasa",
+                    "B. alisha",
+                    "C. Pengalaman yang tak terlupakan bareng lisaa",
+                    "D. Semua di atas"
+                ]
+            },
+            {
+                text: "Apa yang ingin kamu bawa dari usia 16 ke usia 17?",
+                options: [
+                    "A. Kenangan bareng shasa",
+                    "B. lisaa",
+                    "C. alisha",
+                    "D. Semua benar"
+                ]
+            },
+            {
+                text: "Sebelum melanjutkan ke usia 17, apa yang sebaiknya dilakukan terlebih dahulu?",
+                options: [
+                    "A. Mengingat kembali kenangan yang ada bersama shasa",
+                    "B. Mensyukuri semua perjalanan yang telah dilalui bersama lisaa",
+                    "C. Memastikan tidak ada momen berharga yang terlupakan bareng alisha",
+                    "D. Semua jawaban benar"
+                ]
+            }
+        ];
+
+        let currentIdx = 0;
+        let activeTab = 'ujian';
+
+        // Pindah Halaman Utama
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            if (pageId === 'page-login') {
+                document.getElementById('main-header').classList.add('hidden');
+            } else {
+                document.getElementById('main-header').classList.remove('hidden');
+            }
+        }
+
+        // Logic Login
+        function handleLogin() {
+            const nama = document.getElementById('login-nama').value.trim();
+            if(!nama) {
+                alert('Nama peserta tidak boleh kosong ya!');
+                return;
+            }
+            // Set nama di komponen Dashboard & Header
+            document.getElementById('header-user-name').innerText = nama;
+            document.getElementById('dash-user-name').innerText = nama;
+            navigateTo('page-dashboard');
+        }
+
+        function logout() {
+            document.getElementById('login-nama').value = '';
+            navigateTo('page-login');
+        }
+
+        // Navigasi Tab Dashboard (Ujian / Hasil)
+        function switchTab(tab) {
+            activeTab = tab;
+            const btnUjian = document.getElementById('tab-btn-ujian');
+            const btnHasil = document.getElementById('tab-btn-hasil');
+            const contentUjian = document.getElementById('tab-content-ujian');
+            const contentHasil = document.getElementById('tab-content-hasil');
+
+            if(tab === 'ujian') {
+                btnUjian.className = "px-4 py-3 text-blue-600 border-b-2 border-blue-500 bg-gray-50/50";
+                btnHasil.className = "px-4 py-3 hover:text-gray-700";
+                contentUjian.classList.remove('hidden');
+                contentHasil.classList.add('hidden');
+            } else {
+                btnHasil.className = "px-4 py-3 text-blue-600 border-b-2 border-blue-500 bg-gray-50/50";
+                btnUjian.className = "px-4 py-3 hover:text-gray-700";
+                contentHasil.classList.remove('hidden');
+                contentUjian.classList.add('hidden');
+            }
+        }
+
+        // Memulai Kuis
+        function startExam() {
+            currentIdx = 0;
+            renderSoal();
+            navigateTo('page-exam');
+        }
+
+        // Render Komponen Lembar Soal
+        function renderSoal() {
+            const soalObj = daftarSoal[currentIdx];
+            document.getElementById('display-number-top').innerText = currentIdx + 1;
+            document.getElementById('question-text').innerText = soalObj.text;
+
+            const containerOpsi = document.getElementById('options-container');
+            containerOpsi.innerHTML = '';
+
+            soalObj.options.forEach((opsi, index) => {
+                const checkedId = `q-${currentIdx}-opt-${index}`;
+                containerOpsi.innerHTML += `
+                    <label class="option-container flex items-center cursor-pointer block">
+                        <input type="radio" name="jawaban-soal" id="${checkedId}" class="hidden accent-blue-500">
+                        <div class="w-full border border-gray-200 bg-white p-3 rounded text-xs text-gray-700 font-medium hover:bg-gray-50/80 transition flex items-center gap-3">
+                            <span class="h-5 w-5 rounded-full border border-gray-300 flex items-center justify-center text-[10px] text-gray-400 font-bold bg-gray-50 check-icon">
+                                ${String.fromCharCode(65 + index)}
+                            </span>
+                            <span>${opsi.substring(3)}</span>
+                        </div>
+                    </label>
+                `;
+            });
+
+            // Ganti teks tombol "Selanjutnya" jadi "Selesai" di nomor terakhir
+            const btnNext = document.getElementById('btn-next');
+            if (currentIdx === daftarSoal.length - 1) {
+                btnNext.innerHTML = `Selesai Ujian <i class="fa-solid fa-flag-checkered ml-1"></i>`;
+                btnNext.className = "bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded flex items-center gap-1.5 transition";
+            } else {
+                btnNext.innerHTML = `Selanjutnya <i class="fa-solid fa-chevron-right"></i>`;
+                btnNext.className = "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1.5 transition";
+            }
+
+            // Atur tombol "Sebelumnya"
+            document.getElementById('btn-prev').disabled = currentIdx === 0;
+            document.getElementById('btn-prev').style.opacity = currentIdx === 0 ? '0.5' : '1';
+        }
+
+        function prevQuestion() {
+            if(currentIdx > 0) {
+                currentIdx--;
+                renderSoal();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentIdx < daftarSoal.length - 1) {
+                currentIdx++;
+                renderSoal();
+            } else {
+                // Trigger Pop Up Peringatan di Akhir Soal No.5
+                document.getElementById('modal-alert').style.display = 'flex';
+            }
+        }
+
+        // Modal Action
+        function closeModal() {
+            document.getElementById('modal-alert').style.display = 'none';
+        }
+
+        function finishExam() {
+            closeModal();
+            
+            // Sembunyikan ujian yang sudah dikerjakan di beranda, set status kosong sesuai ss2
+            document.getElementById('box-ujian-tersedia').classList.add('hidden');
+            document.getElementById('box-ujian-kosong').classList.remove('hidden');
+
+            // Buka halaman dashboard otomatis langsung ke tab Hasil
+            document.getElementById('hasil-belum-ada').classList.add('hidden');
+            document.getElementById('hasil-sudah-ada').classList.remove('hidden');
+            
+            navigateTo('page-dashboard');
+            switchTab('hasil');
+        }
+    </script>
+</body>
+</html>
