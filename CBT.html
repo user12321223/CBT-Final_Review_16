@@ -207,34 +207,44 @@
     </main>
 
 
-    <div id="modal-alert" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg p-6 max-w-md w-full text-center shadow-2xl border border-gray-100">
-            <div class="mx-auto flex items-center justify-center h-14 w-14 rounded-full bg-orange-50 mb-4">
-                <i class="fa-solid fa-circle-exclamation text-3xl text-orange-500"></i>
-            </div>
-            <h3 class="text-base font-bold text-gray-900">Yakin ingin mengakhiri usia 16?</h3>
-            <p class="text-xs text-gray-500 mt-2.5 leading-relaxed bg-gray-50 p-3 rounded border border-dashed">
-                Periksa kembali seluruh kenangan yang telah kamu jalani.<br>
-                <span class="font-semibold text-gray-700">Pastikan tidak ada momen berharga yang terlewat.</span>
-            </p>
+    <!-- ================= 4. POP-UP / MODAL PERINGATAN (Sesuai Screenshot 4) ================= -->
+    <div id="modal-alert" class="fixed inset-0 bg-black/40 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg p-6 max-w-lg w-full shadow-2xl border border-gray-200">
+            <!-- Judul Pop-up -->
+            <h3 class="text-base font-bold text-gray-900 text-left mb-3">Yakin ingin mengakhiri usia 16?</h3>
             
-            <div class="grid grid-cols-2 gap-3 mt-6 text-xs font-semibold">
-                <button onclick="closeModal()" class="px-4 py-2.5 border border-gray-300 rounded text-gray-700 hover:bg-gray-50 transition">
+            <!-- Konten Checkbox & Kalimat Ucapan -->
+            <div class="flex items-start gap-3 my-4">
+                <input type="checkbox" id="check-konfirmasi" class="mt-1 h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 accent-emerald-600 cursor-pointer">
+                <label for="check-konfirmasi" class="text-xs text-gray-500 leading-relaxed text-left cursor-pointer select-none">
+                    Periksa kembali seluruh kenangan yang telah kamu jalani.<br>
+                    Pastikan tidak ada momen berharga yang terlewat.
+                </label>
+            </div>
+            
+            <!-- Tombol Aksi di Kanan Bawah -->
+            <div class="flex justify-end gap-2 mt-6 text-xs font-semibold">
+                <button onclick="closeModal()" class="px-4 py-2 border border-gray-200 rounded text-gray-600 hover:bg-gray-50 transition">
                     Batal
                 </button>
-                <button onclick="finishExam()" class="px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded shadow-sm transition">
+                <button id="btn-submit-final" onclick="finishExam()" disabled class="px-4 py-2 border border-emerald-500 text-emerald-600 rounded bg-white opacity-40 cursor-not-allowed transition">
                     Selesai
                 </button>
             </div>
         </div>
     </div>
 
+    <!-- ================= FOOTER COPYRIGHT ================= -->
     <footer class="text-center py-3 text-[10px] text-gray-400 border-t bg-white w-full">
         © 2019 - 2026 Extraordinary CBT v3.17.8 - ristretto
     </footer>
 
 
+    <!-- ========================================================
+         DATABASES SOAL & PROGRAM LOGIC (JAVASCRIPT)
+         ======================================================== -->
     <script>
+        // Array Soal Sesuai Request Lengkap Opsi A - D
         const daftarSoal = [
             {
                 text: "Bagaimana perjalananmu di usia 16 sejauh ini?",
@@ -286,6 +296,7 @@
         let currentIdx = 0;
         let activeTab = 'ujian';
 
+        // Pindah Halaman Utama
         function navigateTo(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -296,7 +307,8 @@
                 document.getElementById('main-header').classList.remove('hidden');
             }
         }
-        
+
+        // Logic Login
         function handleLogin() {
             const nama = document.getElementById('login-nama').value.trim();
             if(!nama) {
@@ -313,6 +325,7 @@
             navigateTo('page-login');
         }
 
+        // Navigasi Tab Dashboard (Ujian / Hasil)
         function switchTab(tab) {
             activeTab = tab;
             const btnUjian = document.getElementById('tab-btn-ujian');
@@ -332,13 +345,15 @@
                 contentUjian.classList.add('hidden');
             }
         }
-        
+
+        // Memulai Kuis
         function startExam() {
             currentIdx = 0;
             renderSoal();
             navigateTo('page-exam');
         }
 
+        // Render Komponen Lembar Soal
         function renderSoal() {
             const soalObj = daftarSoal[currentIdx];
             document.getElementById('display-number-top').innerText = currentIdx + 1;
@@ -362,6 +377,7 @@
                 `;
             });
 
+            // Ganti teks tombol "Selanjutnya" jadi "Selesai" di nomor terakhir
             const btnNext = document.getElementById('btn-next');
             if (currentIdx === daftarSoal.length - 1) {
                 btnNext.innerHTML = `Selesai Ujian <i class="fa-solid fa-flag-checkered ml-1"></i>`;
@@ -370,7 +386,8 @@
                 btnNext.innerHTML = `Selanjutnya <i class="fa-solid fa-chevron-right"></i>`;
                 btnNext.className = "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1.5 transition";
             }
-            
+
+            // Atur tombol "Sebelumnya"
             document.getElementById('btn-prev').disabled = currentIdx === 0;
             document.getElementById('btn-prev').style.opacity = currentIdx === 0 ? '0.5' : '1';
         }
@@ -387,19 +404,38 @@
                 currentIdx++;
                 renderSoal();
             } else {
+                // Trigger Pop Up Peringatan di Akhir Soal No.5
                 document.getElementById('modal-alert').style.display = 'flex';
             }
         }
+
+        // Modal Action
         function closeModal() {
             document.getElementById('modal-alert').style.display = 'none';
         }
 
+        // Sistem Otomatis Mengunci Tombol Selesai Sebelum Checkbox Dicentang
+        document.addEventListener('change', function(e) {
+            if(e.target && e.target.id === 'check-konfirmasi') {
+                const btnSelesai = document.getElementById('btn-submit-final');
+                if(e.target.checked) {
+                    btnSelesai.disabled = false;
+                    btnSelesai.className = "px-4 py-2 border border-emerald-500 bg-emerald-50 text-emerald-600 rounded hover:bg-emerald-600 hover:text-white transition shadow-sm cursor-pointer";
+                } else {
+                    btnSelesai.disabled = true;
+                    btnSelesai.className = "px-4 py-2 border border-emerald-500 text-emerald-600 rounded bg-white opacity-40 cursor-not-allowed transition";
+                }
+            }
+        });
+
         function finishExam() {
             closeModal();
+            // Reset checkbox biar kalau di-refresh kondisinya balik awal
+            document.getElementById('check-konfirmasi').checked = false; 
             
+            // Sembunyikan ujian aktif, alihkan langsung ke tab Hasil nilai 100
             document.getElementById('box-ujian-tersedia').classList.add('hidden');
             document.getElementById('box-ujian-kosong').classList.remove('hidden');
-
             document.getElementById('hasil-belum-ada').classList.add('hidden');
             document.getElementById('hasil-sudah-ada').classList.remove('hidden');
             
