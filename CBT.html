@@ -115,13 +115,13 @@
                             <p class="text-gray-400">Nama Peserta</p>
                             <p id="dash-user-name" class="font-bold text-gray-800 uppercase">ALISHA TRI SEPTIARA</p>
                             <p class="text-gray-400 pt-2">Nomor Ujian</p>
-                            <p class="font-bold text-gray-800">3098622092</p>
+                            <p class="font-bold text-gray-800">09062009</p>
                         </div>
                         
                         <div id="box-ujian-tersedia" class="border border-blue-100 bg-blue-50/30 rounded-lg p-4 mt-4 flex justify-between items-center">
                             <div>
                                 <h4 class="text-xs font-bold text-gray-800">Final Review 16</h4>
-                                <p class="text-[11px] text-gray-400 mt-0.5">Ujian Akhir Kelulusan Masa Remaja Usia 16</p>
+                                <p class="text-[11px] text-gray-400 mt-0.5">Ujian Akhir 16</p>
                             </div>
                             <button onclick="startExam()" class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-4 py-1.5 rounded font-medium shadow-sm transition">
                                 Kerjakan
@@ -141,7 +141,7 @@
                             <div class="flex flex-col items-center justify-center bg-green-50 border border-green-100 p-4 rounded-lg">
                                 <span class="text-[10px] font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded uppercase tracking-wider">Nilai Akhir</span>
                                 <h1 class="text-5xl font-black text-green-600 my-2">100</h1>
-                                <p class="text-xs text-gray-500">Status: Lulus Sempurna (Usia 17 Tahun 🎉)</p>
+                                <p class="text-xs text-gray-500">Status: Lulus Sempurna</p>
                             </div>
                             
                             <div class="border-t pt-4">
@@ -235,7 +235,6 @@
 
 
     <script>
-        // Array Soal Sesuai Request Lengkap Opsi A - D
         const daftarSoal = [
             {
                 text: "Bagaimana perjalananmu di usia 16 sejauh ini?",
@@ -251,7 +250,7 @@
                 options: [
                     "A. Petualangan yang seru, karena bareng shasa",
                     "B. Perjalanan yang penuh pelajaran, karena bareng lisaa",
-                    "C. Bab yang tak akan verlupakan, karena bareng alisha",
+                    "C. Bab yang tak akan terlupakan, karena bareng alisha",
                     "D. Semua jawaban benar"
                 ]
             },
@@ -287,7 +286,6 @@
         let currentIdx = 0;
         let activeTab = 'ujian';
 
-        // Pindah Halaman Utama
         function navigateTo(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -298,15 +296,13 @@
                 document.getElementById('main-header').classList.remove('hidden');
             }
         }
-
-        // Logic Login
+        
         function handleLogin() {
             const nama = document.getElementById('login-nama').value.trim();
             if(!nama) {
                 alert('Nama peserta tidak boleh kosong ya!');
                 return;
             }
-            // Set nama di komponen Dashboard & Header
             document.getElementById('header-user-name').innerText = nama;
             document.getElementById('dash-user-name').innerText = nama;
             navigateTo('page-dashboard');
@@ -317,7 +313,6 @@
             navigateTo('page-login');
         }
 
-        // Navigasi Tab Dashboard (Ujian / Hasil)
         function switchTab(tab) {
             activeTab = tab;
             const btnUjian = document.getElementById('tab-btn-ujian');
@@ -337,15 +332,13 @@
                 contentUjian.classList.add('hidden');
             }
         }
-
-        // Memulai Kuis
+        
         function startExam() {
             currentIdx = 0;
             renderSoal();
             navigateTo('page-exam');
         }
 
-        // Render Komponen Lembar Soal
         function renderSoal() {
             const soalObj = daftarSoal[currentIdx];
             document.getElementById('display-number-top').innerText = currentIdx + 1;
@@ -369,7 +362,6 @@
                 `;
             });
 
-            // Ganti teks tombol "Selanjutnya" jadi "Selesai" di nomor terakhir
             const btnNext = document.getElementById('btn-next');
             if (currentIdx === daftarSoal.length - 1) {
                 btnNext.innerHTML = `Selesai Ujian <i class="fa-solid fa-flag-checkered ml-1"></i>`;
@@ -378,8 +370,7 @@
                 btnNext.innerHTML = `Selanjutnya <i class="fa-solid fa-chevron-right"></i>`;
                 btnNext.className = "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1.5 transition";
             }
-
-            // Atur tombol "Sebelumnya"
+            
             document.getElementById('btn-prev').disabled = currentIdx === 0;
             document.getElementById('btn-prev').style.opacity = currentIdx === 0 ? '0.5' : '1';
         }
@@ -396,12 +387,9 @@
                 currentIdx++;
                 renderSoal();
             } else {
-                // Trigger Pop Up Peringatan di Akhir Soal No.5
                 document.getElementById('modal-alert').style.display = 'flex';
             }
         }
-
-        // Modal Action
         function closeModal() {
             document.getElementById('modal-alert').style.display = 'none';
         }
@@ -409,11 +397,9 @@
         function finishExam() {
             closeModal();
             
-            // Sembunyikan ujian yang sudah dikerjakan di beranda, set status kosong sesuai ss2
             document.getElementById('box-ujian-tersedia').classList.add('hidden');
             document.getElementById('box-ujian-kosong').classList.remove('hidden');
 
-            // Buka halaman dashboard otomatis langsung ke tab Hasil
             document.getElementById('hasil-belum-ada').classList.add('hidden');
             document.getElementById('hasil-sudah-ada').classList.remove('hidden');
             
