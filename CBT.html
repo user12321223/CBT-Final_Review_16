@@ -123,10 +123,11 @@
                                 <h4 class="text-xs font-bold text-gray-800">Final Review 16</h4>
                                 <p class="text-[11px] text-gray-400 mt-0.5">Ujian Akhir 16</p>
                             </div>
-                            <button onclick="startExam()" class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-4 py-1.5 rounded font-medium shadow-sm transition">
+                            <button onclick="navigateTo('page-confirm-start')" class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-4 py-1.5 rounded font-medium shadow-sm transition">
                                 Kerjakan
                             </button>
                         </div>
+                        
                         <div id="box-ujian-kosong" class="hidden border border-amber-200 bg-amber-50 text-amber-700 text-xs p-3 rounded text-center font-medium">
                             Tidak ada mata ujian untuk anda saat ini
                         </div>
@@ -148,15 +149,46 @@
                                 <h4 class="text-xs font-bold text-gray-800 mb-2 flex items-center gap-1.5">
                                     <i class="fa-solid fa-envelope-open-text text-blue-500"></i> Surat Pesan Khusus Untukmu:
                                 </h4>
-                                <p class="text-xs text-gray-600 leading-relaxed text-justify bg-gray-50 p-4 rounded border border-gray-100 italic">
-                                    "Happy 17th birthday! On your special day, I genuinely wish you nothing but all the best things in life. I hope this year brings you closer to everything you’ve been quietly wishing for even the things you keep to yourself.<br><br>
-                                    To be completely honest, there’s something I’ve wanted to tell you. Even if I don't always show it, or if I ever seem a bit distant and quiet, I do care about you. Probably way more than it seems. I notice you, and I pay attention to the little things. Somehow, in my quiet moments when nothing is really going on, my mind just randomly wanders back to you.<br><br>
-                                    Without you even knowing it, you’ve become one of my safe places. Someone I think about when things get heavy, when I need a break from everything, or when I just want some comfort. Because of that, I really hope that one day, if you ever need it, I can be that safe place for you too. Somewhere you can just run to, take a breather, and just be yourself."
-                                </p>
+                                <p id="surat-ucapan-box" class="text-xs text-gray-600 leading-relaxed text-justify bg-gray-50 p-4 rounded border border-gray-100 italic">
+                                    </p>
                             </div>
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </div>
+
+
+        <div id="page-confirm-start" class="page w-full max-w-2xl mt-4">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-gray-50 border-b px-4 py-3">
+                    <h3 class="text-xs font-bold text-gray-700 uppercase tracking-wider">Konfirmasi Data Peserta & Jadwal</h3>
+                </div>
+                <div class="p-5 space-y-4 text-xs">
+                    <div class="grid grid-cols-3 gap-y-3 border-b pb-4 text-gray-600">
+                        <div class="font-medium text-gray-400">Nama Ujian</div>
+                        <div class="col-span-2 font-bold text-gray-800">Final Review 16</div>
+                        
+                        <div class="font-medium text-gray-400">Nomor Peserta</div>
+                        <div class="col-span-2 font-semibold text-gray-800">09062009</div>
+                        
+                        <div class="font-medium text-gray-400">Alokasi Waktu</div>
+                        <div class="col-span-2 text-gray-800">45 Menit</div>
+                    </div>
+                    
+                    <div class="bg-blue-50 border border-blue-100 text-blue-700 rounded p-3 text-[11px] leading-relaxed">
+                        <strong>Peringatan Penting:</strong> Pastikan koneksi internet kamu stabil sebelum menekan tombol Mulai. Ujian ini dirancang khusus untuk memperingati gerbang kedewasaan yang baru. Jawablah dengan penuh ketulusan hati.
+                    </div>
+                    
+                    <div class="flex justify-end gap-2 pt-2">
+                        <button onclick="navigateTo('page-dashboard')" class="px-4 py-2 border rounded text-gray-500 hover:bg-gray-50 font-semibold transition">
+                            Kembali
+                        </button>
+                        <button onclick="startExam()" class="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded shadow transition">
+                            Mulai Mengerjakan
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -186,8 +218,7 @@
                         <p id="question-text" class="font-medium text-sm text-gray-900"></p>
                     </div>
 
-                    <div class="space-y-2.5 max-w-3xl" id="options-container">
-                        </div>
+                    <div class="space-y-2.5 max-w-3xl" id="options-container"></div>
                 </div>
 
                 <div class="bg-gray-50 border-t p-3 flex justify-between items-center text-xs font-medium">
@@ -207,13 +238,10 @@
     </main>
 
 
-    <!-- ================= 4. POP-UP / MODAL PERINGATAN (Sesuai Screenshot 4) ================= -->
     <div id="modal-alert" class="fixed inset-0 bg-black/40 hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-lg p-6 max-w-lg w-full shadow-2xl border border-gray-200">
-            <!-- Judul Pop-up -->
             <h3 class="text-base font-bold text-gray-900 text-left mb-3">Yakin ingin mengakhiri usia 16?</h3>
             
-            <!-- Konten Checkbox & Kalimat Ucapan -->
             <div class="flex items-start gap-3 my-4">
                 <input type="checkbox" id="check-konfirmasi" class="mt-1 h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 accent-emerald-600 cursor-pointer">
                 <label for="check-konfirmasi" class="text-xs text-gray-500 leading-relaxed text-left cursor-pointer select-none">
@@ -222,7 +250,6 @@
                 </label>
             </div>
             
-            <!-- Tombol Aksi di Kanan Bawah -->
             <div class="flex justify-end gap-2 mt-6 text-xs font-semibold">
                 <button onclick="closeModal()" class="px-4 py-2 border border-gray-200 rounded text-gray-600 hover:bg-gray-50 transition">
                     Batal
@@ -234,17 +261,13 @@
         </div>
     </div>
 
-    <!-- ================= FOOTER COPYRIGHT ================= -->
     <footer class="text-center py-3 text-[10px] text-gray-400 border-t bg-white w-full">
         © 2019 - 2026 Extraordinary CBT v3.17.8 - ristretto
     </footer>
 
 
-    <!-- ========================================================
-         DATABASES SOAL & PROGRAM LOGIC (JAVASCRIPT)
-         ======================================================== -->
     <script>
-        // Array Soal Sesuai Request Lengkap Opsi A - D
+        // Array Soal Lengkap
         const daftarSoal = [
             {
                 text: "Bagaimana perjalananmu di usia 16 sejauh ini?",
@@ -292,6 +315,9 @@
                 ]
             }
         ];
+
+        // String teks surat ucapan versi santai mengalir
+        const teksSuratUcapan = "Happy 17th birthday! On your special day, I genuinely wish you nothing but all the best things in life. I hope this year brings you closer to everything you’ve been quietly wishing for even the things you keep to yourself.<br><br>To be completely honest, there’s something I’ve wanted to tell you. Even if I don't always show it, or if I ever seem a bit distant and quiet, I do care about you. Probably way more than it seems. I notice you, and I pay attention to the little things. Somehow, in my quiet moments when nothing is really going on, my mind just randomly wanders back to you.<br><br>Without you even knowing it, you’ve become one of my safe places. Someone I think about when things get heavy, when I need a break from everything, or when I just want some comfort. Because of that, I really hope that one day, if you ever need it, I can be that safe place for you too. Somewhere you can just run to, take a breather, and just be yourself.";
 
         let currentIdx = 0;
         let activeTab = 'ujian';
@@ -346,7 +372,7 @@
             }
         }
 
-        // Memulai Kuis
+        // Memulai Kuis setelah lolos dari Halaman Lembar Konfirmasi
         function startExam() {
             currentIdx = 0;
             renderSoal();
@@ -366,9 +392,9 @@
                 const checkedId = `q-${currentIdx}-opt-${index}`;
                 containerOpsi.innerHTML += `
                     <label class="option-container flex items-center cursor-pointer block">
-                        <input type="radio" name="jawaban-soal" id="${checkedId}" class="hidden accent-blue-500">
+                        <input type="radio" name="jawaban-soal" id="${checkedId}" class="hidden">
                         <div class="w-full border border-gray-200 bg-white p-3 rounded text-xs text-gray-700 font-medium hover:bg-gray-50/80 transition flex items-center gap-3">
-                            <span class="h-5 w-5 rounded-full border border-gray-300 flex items-center justify-center text-[10px] text-gray-400 font-bold bg-gray-50 check-icon">
+                            <span class="h-5 w-5 rounded-full border border-gray-300 flex items-center justify-center text-[10px] text-gray-400 font-bold bg-gray-50">
                                 ${String.fromCharCode(65 + index)}
                             </span>
                             <span>${opsi.substring(3)}</span>
@@ -428,15 +454,18 @@
             }
         });
 
+        // Trigger Setelah Tombol Selesai Ditekan (Gambar Kedua)
         function finishExam() {
             closeModal();
-            // Reset checkbox biar kalau di-refresh kondisinya balik awal
             document.getElementById('check-konfirmasi').checked = false; 
             
-            // Sembunyikan ujian aktif, alihkan langsung ke tab Hasil nilai 100
+            // Menyembunyikan ujian aktif, alihkan langsung ke status selesai & nilai 100
             document.getElementById('box-ujian-tersedia').classList.add('hidden');
             document.getElementById('box-ujian-kosong').classList.remove('hidden');
             document.getElementById('hasil-belum-ada').classList.add('hidden');
+            
+            // Menampilkan hasil nilai dan merender isi teks surat ucapan spesial
+            document.getElementById('surat-ucapan-box').innerHTML = teksSuratUcapan;
             document.getElementById('hasil-sudah-ada').classList.remove('hidden');
             
             navigateTo('page-dashboard');
