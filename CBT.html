@@ -13,14 +13,10 @@
             margin: 0;
             padding: 0;
         }
-        /* Biru Khas CBT di Screenshot */
         .bg-cbt-blue { background-color: #3b82f6; }
         .text-cbt-blue { color: #3b82f6; }
-        
         .page { display: none; }
         .page.active { display: block; }
-        
-        /* Custom radio button style */
         .option-container input[type="radio"]:checked + div {
             border-color: #3b82f6;
             background-color: #eff6ff;
@@ -29,6 +25,7 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
+    <!-- HEADER UTAMA -->
     <div id="main-header" class="bg-cbt-blue text-white px-4 py-3 hidden shadow-sm">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -50,8 +47,10 @@
         </div>
     </div>
 
+    <!-- CONTAINER UTAMA -->
     <main class="flex-grow flex items-center justify-center w-full p-4">
 
+        <!-- HALAMAN A: LOGIN -->
         <div id="page-login" class="page active w-full max-w-md">
             <div class="fixed top-0 left-0 right-0 h-[220px] bg-cbt-blue -z-10 shadow-md">
                 <div class="p-4 flex items-center gap-3 text-white max-w-7xl mx-auto">
@@ -89,17 +88,16 @@
                             </span>
                         </div>
                     </div>
-                    <button onclick="handleLogin()" class="w-full bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium py-2 rounded shadow-sm transition">
+                    <button id="btn-login" onclick="handleLogin()" class="w-full bg-blue-500 hover:bg-blue-600 text-white text-xs font-medium py-2 rounded shadow-sm transition">
                         Login
                     </button>
                 </div>
             </div>
         </div>
 
-
+        <!-- HALAMAN B: DASHBOARD -->
         <div id="page-dashboard" class="page w-full max-w-4xl mt-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-                
                 <div class="md:col-span-1 bg-white p-4 rounded-lg shadow-sm border border-gray-200/60 text-center text-xs font-medium text-gray-700">
                     Jangan lupa berdoa, Semoga sukses !
                 </div>
@@ -137,29 +135,25 @@
                         <div id="hasil-belum-ada" class="text-center py-6 text-xs text-gray-400">
                             Belum ada riwayat ujian yang diselesaikan.
                         </div>
-                        
                         <div id="hasil-sudah-ada" class="hidden space-y-6">
                             <div class="flex flex-col items-center justify-center bg-green-50 border border-green-100 p-4 rounded-lg">
                                 <span class="text-[10px] font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded uppercase tracking-wider">Nilai Akhir</span>
                                 <h1 class="text-5xl font-black text-green-600 my-2">100</h1>
                                 <p class="text-xs text-gray-500">Status: Lulus Sempurna</p>
                             </div>
-                            
                             <div class="border-t pt-4">
                                 <h4 class="text-xs font-bold text-gray-800 mb-2 flex items-center gap-1.5">
                                     <i class="fa-solid fa-envelope-open-text text-blue-500"></i> Surat Pesan Khusus Untukmu:
                                 </h4>
-                                <p id="surat-ucapan-box" class="text-xs text-gray-600 leading-relaxed text-justify bg-gray-50 p-4 rounded border border-gray-100 italic">
-                                    </p>
+                                <p id="surat-ucapan-box" class="text-xs text-gray-600 leading-relaxed text-justify bg-gray-50 p-4 rounded border border-gray-100 italic"></p>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
 
-
+        <!-- HALAMAN C: LEMBAR KONFIRMASI -->
         <div id="page-confirm-start" class="page w-full max-w-2xl mt-4">
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                 <div class="bg-gray-50 border-b px-4 py-3">
@@ -169,31 +163,23 @@
                     <div class="grid grid-cols-3 gap-y-3 border-b pb-4 text-gray-600">
                         <div class="font-medium text-gray-400">Nama Ujian</div>
                         <div class="col-span-2 font-bold text-gray-800">Final Review 16</div>
-                        
                         <div class="font-medium text-gray-400">Nomor Peserta</div>
                         <div class="col-span-2 font-semibold text-gray-800">09062009</div>
-                        
                         <div class="font-medium text-gray-400">Alokasi Waktu</div>
                         <div class="col-span-2 text-gray-800">45 Menit</div>
                     </div>
-                    
                     <div class="bg-blue-50 border border-blue-100 text-blue-700 rounded p-3 text-[11px] leading-relaxed">
-                        <strong>Peringatan Penting:</strong> Pastikan koneksi internet mu stabil sebelum menekan tombol Mulai. seluruh jawaban  dari pertanyaan hanya ada di kenangan kita wwkkw
+                        <strong>Peringatan Penting:</strong> Mengklik tombol "Mulai Mengerjakan" dapat menyebabkan efek samping berupa: jantung berdebar lebih cepat, pipi memerah tanpa <i>blush on</i>, dan mendadak kangen seseorang. Jika gejala berlanjut, hubungi pembuat web ini segera untuk mendapatkan pelukan penenang.
                     </div>
-                    
                     <div class="flex justify-end gap-2 pt-2">
-                        <button onclick="navigateTo('page-dashboard')" class="px-4 py-2 border rounded text-gray-500 hover:bg-gray-50 font-semibold transition">
-                            Kembali
-                        </button>
-                        <button onclick="startExam()" class="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded shadow transition">
-                            Mulai Mengerjakan
-                        </button>
+                        <button onclick="navigateTo('page-dashboard')" class="px-4 py-2 border rounded text-gray-500 hover:bg-gray-50 font-semibold transition">Kembali</button>
+                        <button onclick="startExam()" class="px-5 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded shadow transition">Mulai Mengerjakan</button>
                     </div>
                 </div>
             </div>
         </div>
 
-
+        <!-- HALAMAN D: LEMBAR SOAL UJIAN -->
         <div id="page-exam" class="page w-full max-w-7xl mt-4">
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                 <div class="bg-gray-50 border-b px-4 py-2.5 flex justify-between items-center text-xs text-gray-600 font-medium">
@@ -202,46 +188,30 @@
                         <span class="font-bold text-gray-700">Pilihan Ganda Kompleks</span>
                     </div>
                     <div class="flex items-center gap-4">
-                        <div class="bg-blue-500 text-white font-mono px-3 py-1 rounded text-xs font-bold tracking-wider">
-                            00 : 16 : 00
-                        </div>
-                        <div class="flex gap-1 text-gray-400 text-sm">
-                            <button class="p-1 hover:text-gray-600"><i class="fa-solid fa-table-cells"></i></button>
-                            <button class="p-1 hover:text-gray-600"><i class="fa-solid fa-expand"></i></button>
-                        </div>
+                        <div class="bg-blue-500 text-white font-mono px-3 py-1 rounded text-xs font-bold tracking-wider">00 : 16 : 00</div>
                     </div>
                 </div>
-
                 <div class="p-6 space-y-6 min-h-[300px]">
                     <div class="text-xs text-gray-800 leading-relaxed">
                         <span class="font-bold block mb-2 text-gray-400">Pertanyaan:</span>
                         <p id="question-text" class="font-medium text-sm text-gray-900"></p>
                     </div>
-
                     <div class="space-y-2.5 max-w-3xl" id="options-container"></div>
                 </div>
-
                 <div class="bg-gray-50 border-t p-3 flex justify-between items-center text-xs font-medium">
-                    <button id="btn-prev" onclick="prevQuestion()" class="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded flex items-center gap-1.5 transition">
-                        <i class="fa-solid fa-chevron-left"></i> Sebelumnya
-                    </button>
-                    <label class="flex items-center gap-2 text-gray-600 cursor-pointer">
-                        <input type="checkbox" class="h-4 w-4 accent-amber-500 rounded"> Ragu-ragu
-                    </label>
-                    <button id="btn-next" onclick="nextQuestion()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1.5 transition">
-                        Selanjutnya <i class="fa-solid fa-chevron-right"></i>
-                    </button>
+                    <button id="btn-prev" onclick="prevQuestion()" class="bg-red-400 hover:bg-red-500 text-white px-4 py-2 rounded flex items-center gap-1.5 transition"><i class="fa-solid fa-chevron-left"></i> Sebelumnya</button>
+                    <label class="flex items-center gap-2 text-gray-600 cursor-pointer"><input type="checkbox" class="h-4 w-4 accent-amber-500 rounded"> Ragu-ragu</label>
+                    <button id="btn-next" onclick="nextQuestion()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1.5 transition">Selanjutnya <i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
         </div>
 
     </main>
 
-
+    <!-- POP-UP MODAL PERINGATAN -->
     <div id="modal-alert" class="fixed inset-0 bg-black/40 hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-lg p-6 max-w-lg w-full shadow-2xl border border-gray-200">
             <h3 class="text-base font-bold text-gray-900 text-left mb-3">Yakin ingin mengakhiri usia 16?</h3>
-            
             <div class="flex items-start gap-3 my-4">
                 <input type="checkbox" id="check-konfirmasi" class="mt-1 h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 accent-emerald-600 cursor-pointer">
                 <label for="check-konfirmasi" class="text-xs text-gray-500 leading-relaxed text-left cursor-pointer select-none">
@@ -249,14 +219,9 @@
                     Pastikan tidak ada momen berharga yang terlewat.
                 </label>
             </div>
-            
             <div class="flex justify-end gap-2 mt-6 text-xs font-semibold">
-                <button onclick="closeModal()" class="px-4 py-2 border border-gray-200 rounded text-gray-600 hover:bg-gray-50 transition">
-                    Batal
-                </button>
-                <button id="btn-submit-final" onclick="finishExam()" disabled class="px-4 py-2 border border-emerald-500 text-emerald-600 rounded bg-white opacity-40 cursor-not-allowed transition">
-                    Selesai
-                </button>
+                <button onclick="closeModal()" class="px-4 py-2 border border-gray-200 rounded text-gray-600 hover:bg-gray-50 transition">Batal</button>
+                <button id="btn-submit-final" onclick="finishExam()" disabled class="px-4 py-2 border border-emerald-500 text-emerald-600 rounded bg-white opacity-40 cursor-not-allowed transition">Selesai</button>
             </div>
         </div>
     </div>
@@ -265,68 +230,42 @@
         © 2019 - 2026 Extraordinary CBT v3.17.8 - ristretto
     </footer>
 
-
     <script>
-        // Array Soal Lengkap
+        // ganti teks di bawah ini dengan URL Web App milikmu dari Google Apps Script
+        const DATABASE_URL = "https://script.google.com/macros/s/AKfycbxLu6EVL5wTpu0RmsvCGsS28Fu3G7WXkVLkddkYpxHfayQQmJFSCzhxoGWjdVenCAMxgA/exec";
+
         const daftarSoal = [
-            {
-                text: "Bagaimana perjalananmu di usia 16 sejauh ini?",
-                options: [
-                    "A. Penuh cerita baru",
-                    "B. Banyak pelajaran yang didapat",
-                    "C. Ada tawa, ada tantangan",
-                    "D. Semua benar"
-                ]
-            },
-            {
-                text: "Jika usia 16 adalah sebuah cerita, bagaimana kamu menggambarkannya?",
-                options: [
-                    "A. Petualangan yang seru, karena bareng shasa",
-                    "B. Perjalanan yang penuh pelajaran, karena bareng lisaa",
-                    "C. Bab yang tak akan terlupakan, karena bareng alisha",
-                    "D. Semua jawaban benar"
-                ]
-            },
-            {
-                text: "Hal apa yang paling berharga dari usia 16?",
-                options: [
-                    "A. Kenangan yang tercipta bareng shasa",
-                    "B. alisha",
-                    "C. Pengalaman yang tak terlupakan bareng lisaa",
-                    "D. Semua di atas"
-                ]
-            },
-            {
-                text: "Apa yang ingin kamu bawa dari usia 16 ke usia 17?",
-                options: [
-                    "A. Kenangan bareng shasa",
-                    "B. lisaa",
-                    "C. alisha",
-                    "D. Semua benar"
-                ]
-            },
-            {
-                text: "Sebelum melanjutkan ke usia 17, apa yang sebaiknya dilakukan terlebih dahulu?",
-                options: [
-                    "A. Mengingat kembali kenangan yang ada bersama shasa",
-                    "B. Mensyukuri semua perjalanan yang telah dilalui bersama lisaa",
-                    "C. Memastikan tidak ada momen berharga yang terlupakan bareng alisha",
-                    "D. Semua jawaban benar"
-                ]
-            }
+            { text: "Bagaimana perjalananmu di usia 16 sejauh ini?", options: ["A. Penuh cerita baru", "B. Banyak pelajaran yang didapat", "C. Ada tawa, ada tantangan", "D. Semua benar"] },
+            { text: "Jika usia 16 adalah sebuah cerita, bagaimana kamu menggambarkannya?", options: ["A. Petualangan yang seru, karena bareng shasa", "B. Perjalanan yang penuh pelajaran, karena bareng lisaa", "C. Bab yang tak akan terlupakan, karena bareng alisha", "D. Semua jawaban benar"] },
+            { text: "Hal apa yang paling berharga dari usia 16?", options: ["A. Kenangan yang tercipta bareng shasa", "B. alisha", "C. Pengalaman yang tak terlupakan bareng lisaa", "D. Semua di atas"] },
+            { text: "Apa yang ingin kamu bawa dari usia 16 ke usia 17?", options: ["A. Kenangan bareng shasa", "B. lisaa", "C. alisha", "D. Semua benar"] },
+            { text: "Sebelum melanjutkan ke usia 17, apa yang sebaiknya dilakukan terlebih dahulu?", options: ["A. Mengingat kembali kenangan yang ada bersama shasa", "B. Mensyukuri semua perjalanan yang telah dilalui bersama lisaa", "C. Memastikan tidak ada momen berharga yang terlupakan bareng alisha", "D. Semua jawaban benar"] }
         ];
 
-        // String teks surat ucapan versi santai mengalir
         const teksSuratUcapan = "Happy 17th birthday! On your special day, I genuinely wish you nothing but all the best things in life. I hope this year brings you closer to everything you’ve been quietly wishing for even the things you keep to yourself.<br><br>To be completely honest, there’s something I’ve wanted to tell you. Even if I don't always show it, or if I ever seem a bit distant and quiet, I do care about you. Probably way more than it seems. I notice you, and I pay attention to the little things. Somehow, in my quiet moments when nothing is really going on, my mind just randomly wanders back to you.<br><br>Without you even knowing it, you’ve become one of my safe places. Someone I think about when things get heavy, when I need a break from everything, or when I just want some comfort. Because of that, I really hope that one day, if you ever need it, I can be that safe place for you too. Somewhere you can just run to, take a breather, and just be yourself.";
 
         let currentIdx = 0;
         let activeTab = 'ujian';
+        let jawabanUser = []; 
 
-        // Pindah Halaman Utama
+        function kirimKeDatabase(aksi, namaPeserta, detailJawaban = "") {
+            if(!DATABASE_URL || DATABASE_URL.includes("PASTE_URL")) return;
+            
+            fetch(DATABASE_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    aksi: aksi,
+                    nama: namaPeserta,
+                    jawaban: detailJawaban
+                })
+            }).catch(err => console.log("Gagal log ke database:", err));
+        }
+
         function navigateTo(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            
             if (pageId === 'page-login') {
                 document.getElementById('main-header').classList.add('hidden');
             } else {
@@ -334,7 +273,6 @@
             }
         }
 
-        // Logic Login
         function handleLogin() {
             const nama = document.getElementById('login-nama').value.trim();
             if(!nama) {
@@ -343,6 +281,10 @@
             }
             document.getElementById('header-user-name').innerText = nama;
             document.getElementById('dash-user-name').innerText = nama;
+            
+            // LOG 1: Deteksi saat dia login masuk web
+            kirimKeDatabase("LOGIN / AKSES WEB", nama);
+            
             navigateTo('page-dashboard');
         }
 
@@ -351,7 +293,6 @@
             navigateTo('page-login');
         }
 
-        // Navigasi Tab Dashboard (Ujian / Hasil)
         function switchTab(tab) {
             activeTab = tab;
             const btnUjian = document.getElementById('tab-btn-ujian');
@@ -372,14 +313,22 @@
             }
         }
 
-        // Memulai Kuis setelah lolos dari Halaman Lembar Konfirmasi
         function startExam() {
             currentIdx = 0;
+            jawabanUser = new Array(daftarSoal.length).fill("-");
             renderSoal();
             navigateTo('page-exam');
         }
 
-        // Render Komponen Lembar Soal
+        function simpanJawabanSementara() {
+            const radioTerpilih = document.querySelector('input[name="jawaban-soal"]:checked');
+            if(radioTerpilih) {
+                const labelOpsi = radioTerpilih.nextElementSibling.querySelector('span:last-child').innerText;
+                const hurufOpsi = radioTerpilih.nextElementSibling.querySelector('span:first-child').innerText;
+                jawabanUser[currentIdx] = `${hurufOpsi}. ${labelOpsi}`;
+            }
+        }
+
         function renderSoal() {
             const soalObj = daftarSoal[currentIdx];
             document.getElementById('display-number-top').innerText = currentIdx + 1;
@@ -390,12 +339,15 @@
 
             soalObj.options.forEach((opsi, index) => {
                 const checkedId = `q-${currentIdx}-opt-${index}`;
+                const huruf = String.fromCharCode(65 + index);
+                const isChecked = jawabanUser[currentIdx].startsWith(huruf);
+
                 containerOpsi.innerHTML += `
                     <label class="option-container flex items-center cursor-pointer block">
-                        <input type="radio" name="jawaban-soal" id="${checkedId}" class="hidden">
+                        <input type="radio" name="jawaban-soal" id="${checkedId}" class="hidden" ${isChecked ? 'checked' : ''} onchange="simpanJawabanSementara()">
                         <div class="w-full border border-gray-200 bg-white p-3 rounded text-xs text-gray-700 font-medium hover:bg-gray-50/80 transition flex items-center gap-3">
                             <span class="h-5 w-5 rounded-full border border-gray-300 flex items-center justify-center text-[10px] text-gray-400 font-bold bg-gray-50">
-                                ${String.fromCharCode(65 + index)}
+                                ${huruf}
                             </span>
                             <span>${opsi.substring(3)}</span>
                         </div>
@@ -403,7 +355,6 @@
                 `;
             });
 
-            // Ganti teks tombol "Selanjutnya" jadi "Selesai" di nomor terakhir
             const btnNext = document.getElementById('btn-next');
             if (currentIdx === daftarSoal.length - 1) {
                 btnNext.innerHTML = `Selesai Ujian <i class="fa-solid fa-flag-checkered ml-1"></i>`;
@@ -413,34 +364,32 @@
                 btnNext.className = "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center gap-1.5 transition";
             }
 
-            // Atur tombol "Sebelumnya"
             document.getElementById('btn-prev').disabled = currentIdx === 0;
             document.getElementById('btn-prev').style.opacity = currentIdx === 0 ? '0.5' : '1';
         }
 
         function prevQuestion() {
             if(currentIdx > 0) {
+                simpanJawabanSementara();
                 currentIdx--;
                 renderSoal();
             }
         }
 
         function nextQuestion() {
+            simpanJawabanSementara();
             if (currentIdx < daftarSoal.length - 1) {
                 currentIdx++;
                 renderSoal();
             } else {
-                // Trigger Pop Up Peringatan di Akhir Soal No.5
                 document.getElementById('modal-alert').style.display = 'flex';
             }
         }
 
-        // Modal Action
         function closeModal() {
             document.getElementById('modal-alert').style.display = 'none';
         }
 
-        // Sistem Otomatis Mengunci Tombol Selesai Sebelum Checkbox Dicentang
         document.addEventListener('change', function(e) {
             if(e.target && e.target.id === 'check-konfirmasi') {
                 const btnSelesai = document.getElementById('btn-submit-final');
@@ -454,17 +403,22 @@
             }
         });
 
-        // Trigger Setelah Tombol Selesai Ditekan (Gambar Kedua)
         function finishExam() {
             closeModal();
             document.getElementById('check-konfirmasi').checked = false; 
             
-            // Menyembunyikan ujian aktif, alihkan langsung ke status selesai & nilai 100
+            const nama = document.getElementById('header-user-name').innerText;
+            
+            // Format rekap semua jawaban jadi satu teks panjang
+            let stringJawaban = jawabanUser.map((jwb, i) => `[No.${i+1}: ${jwb}]`).join(" | ");
+            
+            // LOG 2: Mengirim seluruh jawaban kuis saat dia klik tombol selesai
+            kirimKeDatabase("SUBMIT JAWABAN UJIAN", nama, stringJawaban);
+            
             document.getElementById('box-ujian-tersedia').classList.add('hidden');
             document.getElementById('box-ujian-kosong').classList.remove('hidden');
             document.getElementById('hasil-belum-ada').classList.add('hidden');
             
-            // Menampilkan hasil nilai dan merender isi teks surat ucapan spesial
             document.getElementById('surat-ucapan-box').innerHTML = teksSuratUcapan;
             document.getElementById('hasil-sudah-ada').classList.remove('hidden');
             
