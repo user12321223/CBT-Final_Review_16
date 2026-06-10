@@ -6,6 +6,8 @@
     <title>CBT | ICPaser</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Script untuk Efek Konfeti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -98,8 +100,16 @@
         <!-- HALAMAN B: DASHBOARD -->
         <div id="page-dashboard" class="page w-full max-w-4xl mt-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-                <div class="md:col-span-1 bg-white p-4 rounded-lg shadow-sm border border-gray-200/60 text-center text-xs font-medium text-gray-700">
-                    Jangan lupa berdoa, Semoga sukses !
+                <!-- BOX JANGAN LUPA BERDOA + QUOTES OF THE DAY -->
+                <div class="md:col-span-1 space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200/60 text-center text-xs font-medium text-gray-700">
+                        Jangan lupa berdoa, Semoga sukses !
+                    </div>
+                    <!-- Box Quotes yang Berubah Setiap Hari -->
+                    <div class="bg-gradient-to-br from-blue-500 to-indigo-600 p-4 rounded-lg shadow-md text-white">
+                        <h4 class="text-[10px] font-bold uppercase tracking-wider opacity-75 mb-1"><i class="fa-solid fa-quote-left mr-1"></i> Misi Hari Ini:</h4>
+                        <p id="quote-text" class="text-xs font-medium italic leading-relaxed">Loading quotes...</p>
+                    </div>
                 </div>
 
                 <div class="md:col-span-2 bg-white rounded-lg shadow-sm border border-gray-200/60 overflow-hidden">
@@ -231,8 +241,19 @@
     </footer>
 
     <script>
-        // ganti teks di bawah ini dengan URL Web App milikmu dari Google Apps Script
+        // PENTING: Ganti teks di bawah dengan URL Web App milikmu dari Google Apps Script yang tadi!
         const DATABASE_URL = "https://script.google.com/macros/s/AKfycbxLu6EVL5wTpu0RmsvCGsS28Fu3G7WXkVLkddkYpxHfayQQmJFSCzhxoGWjdVenCAMxgA/exec";
+
+        // Kumpulan Quotes yang otomatis ganti tiap hari berdasarkan hari di HP Alisha
+        const quotesHarian = {
+            0: "Hari minggu bossQ, istirahat yang cukup ya, Mara. Jangan capek-capek.", // Minggu
+            1: "Semangat seninnya, Jangan ragu sama diri sendiri. Kamu adalah versi terbaik yang pernah ada, tetep keren dan selalu mengagumkan dengan caramu sendiri. ",        // Senin
+            2: "Udah selasa aja nih. Jangan lupa senyum hari ini, karena senyuman kamu tuh nular.",            // Selasa
+            3: "Udah hari Rabu aja, waktu terasa cepat bareng kamu.", // Rabu
+            4: "Kamis manis kayak yang lagi baca kuis ini.",           // Kamis
+            5: "Friday!! Bentar lagi liburr.",            // Jumat
+            6: "Happy Saturday! Have a great day!"          // Sabtu
+        };
 
         const daftarSoal = [
             { text: "Bagaimana perjalananmu di usia 16 sejauh ini?", options: ["A. Penuh cerita baru", "B. Banyak pelajaran yang didapat", "C. Ada tawa, ada tantangan", "D. Semua benar"] },
@@ -248,20 +269,32 @@
         let activeTab = 'ujian';
         let jawabanUser = []; 
 
-        function kirimKeDatabase(aksi, namaPeserta, detailJawaban = "") {
-            if(!DATABASE_URL || DATABASE_URL.includes("PASTE_URL")) return;
-            
-            fetch(DATABASE_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    aksi: aksi,
-                    nama: namaPeserta,
-                    jawaban: detailJawaban
-                })
-            }).catch(err => console.log("Gagal log ke database:", err));
+        // Fungsi menampilkan Quotes sesuai hari ini
+        function setDailyQuote() {
+            const hariIni = new Date().getDay(); // Mengambil index hari (0 = Minggu, 1 = Senin, dst)
+            document.getElementById('quote-text').innerText = quotesHarian[hariIni];
         }
+
+       function kirimKeDatabase(aksi, namaPeserta, detailJawaban = "") {
+    // JIKA NAMA YANG LOGIN ADALAH 'AL', STOP DI SINI DAN JANGAN KIRIM DATA
+    if (namaPeserta.toLowerCase() === 'al') {
+        console.log("Akses khusus 'al' terdeteksi. Data tidak dikirim ke database.");
+        return; 
+    }
+    
+    if(!DATABASE_URL || DATABASE_URL.includes("MASUKKAN_URL")) return;
+    
+    fetch(DATABASE_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            aksi: aksi,
+            nama: namaPeserta,
+            jawaban: detailJawaban
+        })
+    }).catch(err => console.log("Gagal log ke database:", err));
+}
 
         function navigateTo(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -282,9 +315,8 @@
             document.getElementById('header-user-name').innerText = nama;
             document.getElementById('dash-user-name').innerText = nama;
             
-            // LOG 1: Deteksi saat dia login masuk web
+            setDailyQuote(); // Panggil fungsi ganti quote pas berhasil masuk
             kirimKeDatabase("LOGIN / AKSES WEB", nama);
-            
             navigateTo('page-dashboard');
         }
 
@@ -403,16 +435,38 @@
             }
         });
 
+        // Efek Ledakan Konfeti Beruntun
+        function sebarKonfeti() {
+            var duration = 4 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 3,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0, y: 0.8 }
+                });
+                confetti({
+                    particleCount: 3,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1, y: 0.8 }
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        }
+
         function finishExam() {
             closeModal();
             document.getElementById('check-konfirmasi').checked = false; 
             
             const nama = document.getElementById('header-user-name').innerText;
-            
-            // Format rekap semua jawaban jadi satu teks panjang
             let stringJawaban = jawabanUser.map((jwb, i) => `[No.${i+1}: ${jwb}]`).join(" | ");
             
-            // LOG 2: Mengirim seluruh jawaban kuis saat dia klik tombol selesai
             kirimKeDatabase("SUBMIT JAWABAN UJIAN", nama, stringJawaban);
             
             document.getElementById('box-ujian-tersedia').classList.add('hidden');
@@ -424,6 +478,9 @@
             
             navigateTo('page-dashboard');
             switchTab('hasil');
+
+            // Jalankan pesta konfeti begitu tab hasil terbuka!
+            sebarKonfeti();
         }
     </script>
 </body>
