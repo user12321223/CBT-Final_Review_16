@@ -255,22 +255,6 @@
        // 1. Definisikan variabelnya saja dulu
 let daftarSoal = [];
 
-// 2. Buat fungsi untuk memuat soal
-function loadSoal() {
-    const savedData = localStorage.getItem('cbt_config');
-    if (savedData) {
-        // Kalau ada data dari admin, pakai itu
-        const data = JSON.parse(savedData);
-        daftarSoal = data.soal;
-    } else {
-        // Kalau belum ada, pakai data default (biar nggak error)
-        daftarSoal = [
-            { text: "Bagaimana perjalananmu di usia 16 sejauh ini?", options: ["A. Penuh cerita baru", "B. Banyak pelajaran yang didapat", "C. Ada tawa, ada tantangan", "D. Semua benar"] }
-            // ... masukkan soal default kamu di sini
-        ];
-    }
-}
-
 // 3. Panggil fungsi ini saat web pertama kali dibuka
 loadSoal();
         const teksSuratUcapan = "Happy 17th birthday! On your special day, I genuinely wish you nothing but all the best things in life. I hope this year brings you closer to everything you’ve been quietly wishing for even the things you keep to yourself.<br><br>To be completely honest, there’s something I’ve wanted to tell you. Even if I don't always show it, or if I ever seem a bit distant and quiet, I do care about you. Probably way more than it seems. I notice you, and I pay attention to the little things. Somehow, in my quiet moments when nothing is really going on, my mind just randomly wanders back to you.<br><br>Without you even knowing it, you’ve become one of my safe places. Someone I think about when things get heavy, when I need a break from everything, or when I just want some comfort. Because of that, I really hope that one day, if you ever need it, I can be that safe place for you too. Somewhere you can just run to, take a breather, and just be yourself.";
