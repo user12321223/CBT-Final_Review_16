@@ -361,6 +361,30 @@ function saveAdminData() {
                 contentUjian.classList.add('hidden');
             }
         }
+        function loadSoal() {
+    const savedData = localStorage.getItem('cbt_config');
+    
+    // Coba log ke console buat mastiin ada data atau nggak
+    console.log("Mencoba load data:", savedData);
+
+    if (savedData) {
+        try {
+            const data = JSON.parse(savedData);
+            // Pastikan data.soal ada isinya
+            if (data && data.soal) {
+                daftarSoal = data.soal;
+                console.log("Data soal baru berhasil dimuat!");
+            }
+        } catch (e) {
+            console.error("Gagal parse JSON:", e);
+        }
+    } else {
+        console.log("Tidak ada data di localStorage, memakai default.");
+        daftarSoal = [
+            { text: "Soal Default (Admin belum isi)", options: ["A. -", "B. -", "C. -", "D. -"] }
+        ];
+    }
+}
        function startExam() {
     loadSoal();
     
