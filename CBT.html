@@ -239,34 +239,28 @@
     <footer class="text-center py-3 text-[10px] text-gray-400 border-t bg-white w-full">
         © 2019 - 2026 Extraordinary CBT v3.17.8 - ristretto
     </footer>
-
 <script>
-    // 1. Variabel Global (Cukup deklarasikan SEKALI di paling atas)
+    // 1. Variabel Global
     let daftarSoal = [];
     let currentIdx = 0;
-    let activeTab = 'ujian';
-    let jawabanUser = []; 
     const DATABASE_URL = "https://script.google.com/macros/s/AKfycbxLu6EVL5wTpu0RmsvCGsS28Fu3G7WXkVLkddkYpxHfayQQmJFSCzhxoGWjdVenCAMxgA/exec";
-    
-    // Quotes & Data
     const quotesHarian = { 0: "Hari minggu bossQ...", 1: "Semangat seninnya...", 2: "Udah selasa...", 3: "Udah Rabu...", 4: "Kamis manis...", 5: "Friday!!", 6: "Happy Saturday!" };
-    const teksSuratUcapan = "Happy 17th birthday! ...";
 
-    // 2. Fungsi Load Soal (Panggil ini hanya saat mau ujian)
-    function loadSoal() {
-        const savedData = localStorage.getItem('cbt_config');
-        if (savedData) {
-            try {
-                const data = JSON.parse(savedData);
-                if (data && data.soal) daftarSoal = data.soal;
-            } catch (e) { console.error("Gagal parse:", e); }
-        }
-        if (daftarSoal.length === 0) {
-            daftarSoal = [{ text: "Soal Default", options: ["A. -", "B. -", "C. -", "D. -"] }];
+    // 2. Navigasi Halaman
+    function navigateTo(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        
+        // Tampilkan header utama hanya jika sudah login
+        const header = document.getElementById('main-header');
+        if(pageId === 'page-login' || pageId === 'page-admin') {
+            header.classList.add('hidden');
+        } else {
+            header.classList.remove('hidden');
         }
     }
 
-    // 3. FUNGSI LOGIN (Ini yang tadi bikin macet karena salah urutan)
+    // 3. Fungsi Login
     function handleLogin() {
         const nama = document.getElementById('login-nama').value.trim();
         if(!nama) return alert('Nama peserta tidak boleh kosong!');
@@ -278,18 +272,44 @@
 
         document.getElementById('header-user-name').innerText = nama;
         document.getElementById('dash-user-name').innerText = nama;
+        document.getElementById('quote-text').innerText = quotesHarian[new Date().getDay()];
         
-        // Panggil fungsi setDailyQuote yang ada di bawah
-        const hariIni = new Date().getDay();
-        document.getElementById('quote-text').innerText = quotesHarian[hariIni];
-        
-        kirimKeDatabase("LOGIN", nama);
         navigateTo('page-dashboard');
     }
 
-    // ... (Masukkan fungsi lainnya seperti navigateTo, kirimKeDatabase, dsb di sini) ...
-    // Pastikan tidak ada fungsi yang dideklarasikan dua kali!
+    // 4. Fungsi Admin
+    function saveAdminData() {
+        const data = document.getElementById('admin-data').value;
+        localStorage.setItem('cbt_config', data);
+        alert('Data berhasil disimpan!');
+    }
 
-    </script>
+    // 5. Fungsi Ujian (Dummy)
+    function startExam() {
+        alert("Mulai ujian...");
+        navigateTo('page-exam');
+    }
+
+    function switchTab(tab) {
+        document.getElementById('tab-content-ujian').classList.toggle('hidden', tab !== 'ujian');
+        document.getElementById('tab-content-hasil').classList.toggle('hidden', tab !== 'hasil');
+    }
+
+    function logout() {
+        window.location.reload();
+    }
+
+    function kirimKeDatabase(tipe, data) {
+        console.log("Mengirim ke DB:", tipe, data);
+    }
+    
+    // Inisialisasi awal
+    window.onload = () => {
+        const savedData = localStorage.getItem('cbt_config');
+        if(savedData) {
+            // Bisa tambah logika load soal di sini
+        }
+    }
+</script>
 </body>
 </html>
