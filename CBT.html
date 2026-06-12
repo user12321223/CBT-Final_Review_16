@@ -123,7 +123,7 @@
                         
                         <div id="box-ujian-tersedia" class="border border-blue-100 bg-blue-50/30 rounded-lg p-4 mt-4 flex justify-between items-center">
                             <div>
-                                <h4 class="text-xs font-bold text-gray-800">Final Review 16</h4>
+                                <h4 id="judul-ujian" class="text-xs font-bold text-gray-800">Final Review 16</h4>
                                 <p class="text-[11px] text-gray-400 mt-0.5">Ujian Akhir 16</p>
                             </div>
                             <button onclick="navigateTo('page-confirm-start')" class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-4 py-1.5 rounded font-medium shadow-sm transition">
@@ -313,12 +313,15 @@ loadSoal();
 }
 
 function saveAdminData() {
-    const data = document.getElementById('admin-data').value;
+    const dataInput = document.getElementById('admin-data').value;
     try {
-        const parsed = JSON.parse(data);
-        // Di sini kamu bisa simpan ke LocalStorage agar tidak hilang saat reload
+        const parsed = JSON.parse(dataInput);
         localStorage.setItem('cbt_config', JSON.stringify(parsed));
-        alert("Data berhasil disimpan! (Silahkan refresh untuk melihat perubahan)");
+        
+        // LANGSUNG UPDATE VARIABEL GLOBAL
+        daftarSoal = parsed.soal; 
+        
+        alert("Data berhasil disimpan & diupdate!");
     } catch(e) {
         alert("Format JSON salah, cek lagi ya!");
     }
@@ -345,25 +348,26 @@ function saveAdminData() {
                 contentUjian.classList.add('hidden');
             }
         }
-        function loadSoal() {
-    const savedData = localStorage.getItem('cbt_config');
-    
-    // Coba log ke console buat mastiin ada data atau nggak
-    console.log("Mencoba load data:", savedData);
+        // Variable global
+let daftarSoal = [];
 
+// Fungsi satu-satunya untuk ambil data
+function loadSoal() {
+    const savedData = localStorage.getItem('cbt_config');
     if (savedData) {
         try {
             const data = JSON.parse(savedData);
-            // Pastikan data.soal ada isinya
             if (data && data.soal) {
                 daftarSoal = data.soal;
-                console.log("Data soal baru berhasil dimuat!");
+                console.log("Soal berhasil dimuat dari localStorage");
             }
         } catch (e) {
             console.error("Gagal parse JSON:", e);
         }
-    } else {
-        console.log("Tidak ada data di localStorage, memakai default.");
+    }
+    
+    // Kalau masih kosong, isi default
+    if (daftarSoal.length === 0) {
         daftarSoal = [
             { text: "Soal Default (Admin belum isi)", options: ["A. -", "B. -", "C. -", "D. -"] }
         ];
