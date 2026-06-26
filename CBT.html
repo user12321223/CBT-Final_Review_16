@@ -230,9 +230,8 @@
         © 2019 - 2026 Extraordinary CBT v3.17.8 - ristretto
     </footer>
     <script>
-        // PENTING: Ganti teks di bawah dengan URL Web App milikmu dari Google Apps Script yang tadi!
+        // URL Web App
         const DATABASE_URL = "https://script.google.com/macros/s/AKfycbxLu6EVL5wTpu0RmsvCGsS28Fu3G7WXkVLkddkYpxHfayQQmJFSCzhxoGWjdVenCAMxgA/exec";
-        // Kumpulan Quotes yang otomatis ganti tiap hari berdasarkan hari di HP Alisha
         const quotesHarian = {
             0: "Hari minggu bossQ, istirahat yang cukup ya. Jangan capek-capek.",
             1: "Semangat seninnya, Jangan ragu sama diri sendiri. kamu tetep keren dan selalu mengagumkan dengan caramu sendiri. ",
@@ -253,13 +252,13 @@
         let currentIdx = 0;
         let activeTab = 'ujian';
         let jawabanUser = []; 
-        // Fungsi menampilkan Quotes sesuai hari ini
+        // Quotes sesuai hari ini
         function setDailyQuote() {
             const hariIni = new Date().getDay(); // Mengambil index hari (0 = Minggu, 1 = Senin, dst)
             document.getElementById('quote-text').innerText = quotesHarian[hariIni];
         }
        function kirimKeDatabase(aksi, namaPeserta, detailJawaban = "") {
-    // JIKA NAMA YANG LOGIN ADALAH 'AL', STOP DI SINI DAN JANGAN KIRIM DATA
+    // NAMA YANG LOGIN 'AL'
     if (namaPeserta.toLowerCase() === 'al') {
         console.log("Akses khusus 'al' terdeteksi. Data tidak dikirim ke database.");
         return; 
@@ -400,7 +399,7 @@
                 }
             }
         });
-        // Efek Ledakan Konfeti Beruntun
+        // Efek Konfeti
         function sebarKonfeti() {
             var duration = 4 * 1000;
             var end = Date.now() + duration;
@@ -440,7 +439,7 @@
             
             navigateTo('page-dashboard');
             switchTab('hasil');
-            // Jalankan pesta konfeti begitu tab hasil terbuka!
+            //  konfeti
             sebarKonfeti();
         }
     </script>
