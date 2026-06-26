@@ -64,7 +64,11 @@ function handleLogin() {
         alert('Nama peserta tidak boleh kosong ya!');
         return;
     }
+    
+    // Ganti nama di kanan atas header (bukan di kiri lagi!)
     document.getElementById('header-display-name').innerText = nama;
+    
+    // Ganti nama di dalam dashboard kartu ujian
     document.getElementById('dash-user-name').innerText = nama;
     
     setDailyQuote();
